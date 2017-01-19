@@ -1,0 +1,18 @@
+.posts-wrapper
+  .post
+    .post-body
+      .image-wrap
+        = simple_form_for @user, url: {action: "update"}, html: { multipart: true } do |f|
+          .row
+            .col-md-12
+              .form-group.text-center
+                %h4 Mudar imagem de perfil:
+                %img.circle.responsive-img{:src => @user.avatar.url(:thumb)}/
+                = f.file_field :avatar, onChange: 'loadFile(event)'
+          .row
+            .col-md-12
+              .form-group.text-center
+                %h4 Atualizar biografia:
+                = f.input :email, label: false, rows: 4
+          .form-group.text-center
+            = f.submit "Salvar Alterações", class: 'btn btn-success'

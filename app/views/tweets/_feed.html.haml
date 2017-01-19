@@ -1,0 +1,39 @@
+- if @feed_items != nil
+  - @feed_items.each do |item|
+    - if item.image.size != nil
+      .row
+        .col.s12.m12
+          .card
+            .card-image
+              %img.circle.responsive-img{:src => item.image.url(:medium)}/
+            .card-content
+              .row.valign-wrapper
+                .col.s2
+                  %img.circle.responsive-img{:src => item.user.avatar.url(:thumb)}/
+                .col.s10
+                  %span.black-text
+                    = link_to item.user.user_name
+                    = time_ago_in_words(item.created_at)
+                  %p
+                    = item.message
+            .card-action
+              %a{:href => "#"}
+                %i.material-icons comment
+
+    - else
+      .row
+        .col.s12.m12
+          .card
+            .card-content
+              .row.valign-wrapper
+                .col.s2
+                  %img.circle.responsive-img{:src => item.user.avatar.url(:thumb)}/
+                .col.s10
+                  %span.black-text
+                    = link_to item.user.user_name
+                    = time_ago_in_words(item.created_at)
+                  %p
+                    = item.message
+            .card-action
+              %a{:href => "#"}
+                %i.material-icons comment

@@ -1,0 +1,63 @@
+!!!
+%html
+  %head
+    %title Microblog
+    = csrf_meta_tags
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+    %link{:href => "https://fonts.googleapis.com/icon?family=Material+Icons", :rel => "stylesheet"}/
+
+  %body
+    / Navbar goes here
+    - if signed_in?
+      %nav.teal
+        %ul#slide-out.side-nav.fixed
+          %li
+            .userView
+              .background
+              %a{:href => edit_profile_path(current_user.user_name)}
+                %img.circle{:src => current_user.avatar.url(:thumb)}/
+              .chip
+                =current_user.user_name
+          %li
+            %a{:href => root_path(current_user.tweets)}
+              Tweets
+          %li
+            %a{:href => new_tweet_path} Novo Tweet
+          %li
+            %span.badge
+              = current_user.following.count
+            %a{:href => profiles_following_path} Seguindo
+          %li
+            %span.badge
+              = current_user.followers.count
+            %a{:href => profiles_followers_path} Seguidores
+          %li
+            %a{:href => profiles_index_path} Encontrar amigos
+          %li
+            = link_to "Sair", destroy_user_session_path, method: :delete
+        %a.button-collapse{"data-activates" => "slide-out", :href => "#"}
+          %i.material-icons menu
+
+    - else
+      %nav.teal
+        %ul#slide-out.side-nav.fixed
+          %li
+            = link_to 'Registrar-se', new_user_registration_path
+          %li
+            = link_to 'Entrar', user_session_path
+    %main
+    / Page Layout here
+    .row
+      .col.s12.m4.l3
+        / Note that "m4 l3" was added
+        /
+          Grey navigation panel
+
+          This content will be:
+          3-columns-wide on large screens,
+          4-columns-wide on medium screens,
+          12-columns-wide on small screens
+      .col.s12.m8.l9
+        .container
+          = yield

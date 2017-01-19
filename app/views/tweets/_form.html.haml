@@ -1,0 +1,14 @@
+- if @tweet.errors.any?
+  %blockquote
+    %ul
+      - @tweet.errors.full_messages.each do |msg|
+        %li= msg
+= simple_form_for @tweet do |f|
+  .row
+  %form.col.s12
+    .row
+      .input-field.col.s12
+        = f.input :message, label: false, placeholder: 'O que você está pensando?', input_html: { class: 'materialize-textarea', :length => "140" }
+        = f.input :image, label: false
+      .input-field.col.s12
+        = f.button :submit, "Tweetar"

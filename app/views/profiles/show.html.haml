@@ -1,0 +1,71 @@
+.posts-wrapper
+  .row.profile-header
+    .col-md-6
+      .img-circle
+        %img.circle.responsive-img{:src => @user.avatar.url(:thumb)}/
+    .col-md-6
+      .user-name-and-follow
+        .valign-wrapper
+          %h5.valign= @user.user_name
+        %span
+          - if @user == current_user
+            = link_to 'Editar Perfil', edit_profile_path(@user.user_name),
+                                      class: 'btn edit-button'
+          - else
+            - if current_user_is_following(current_user.id, @user.id)
+              = link_to 'Following', unfollow_user_path,
+                                     remote: true,
+                                     class: 'btn unfollow-button',
+                                     id: 'unfollow-button',
+                                     method: :post
+            - else
+              = link_to 'Follow', follow_user_path,
+                                  remote: true,
+                                  class: 'btn follow-button',
+                                  id: 'follow-button',
+                                  method: :post
+      .user-statistics
+        %p
+
+          .chip
+            Feed de Status -
+            = @user.tweets.count
+            tweets
+          - @user.tweets.each do |tweet|
+            - if tweet.image.size != nil
+              .row
+                .col.s12.m12
+                  .card
+                    .card-image
+                      %img.circle.responsive-img{:src => tweet.image.url(:medium)}/
+                    .card-content
+                      .row.valign-wrapper
+                        .col.s2
+                          %img.circle.responsive-img{:src => tweet.user.avatar.url(:thumb)}/
+                        .col.s10
+                          %span.black-text
+                            = link_to tweet.user.user_name
+                            = time_ago_in_words(tweet.created_at)
+                          %p
+                            = tweet.message
+                    .card-action
+                      %a{:href => "#"}
+                        %i.material-icons comment
+
+            - else
+              .row
+                .col.s12.m12
+                  .card
+                    .card-content
+                      .row.valign-wrapper
+                        .col.s2
+                          %img.circle.responsive-img{:src => tweet.user.avatar.url(:thumb)}/
+                        .col.s10
+                          %span.black-text
+                            = link_to tweet.user.user_name
+                            = time_ago_in_words(tweet.created_at)
+                          %p
+                            = tweet.message
+                    .card-action
+                      %a{:href => "#"}
+                        %i.material-icons comment

@@ -1,0 +1,10 @@
+- @tweets.each do |tweet|
+  %ul.collection
+    %li.collection-item.avatar
+      %img.circle.responsive-img{:src => tweet.user.avatar.url(:thumb)}/
+      %span.title= link_to tweet.user.user_name
+      %span.title= time_ago_in_words(tweet.created_at)
+      %p
+        = tweet.message
+      %a.secondary-content{:href => "#!"}
+        %i.material-icons comment

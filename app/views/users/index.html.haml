@@ -1,0 +1,6 @@
+- @users.each do |user|
+  %ul.collection
+    %li.collection-item.avatar
+      %img.circle.responsive-img{:src => user.avatar.url(:thumb)}/
+      %p
+        = link_to user.user_name, user_path(user)
